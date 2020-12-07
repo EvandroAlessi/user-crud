@@ -1,0 +1,81 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-edit mr-2"></i>
+                        <strong>Editar Usuário</strong>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="text-input">Nome</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" [class.is-invalid]="errors?.name" placeholder="Nome" [(ngModel)]="user.name" name="name">
+                                <div class="invalid-feedback" *ngFor="let error of errors?.name">
+                                    {{ error }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="text-input">Sobrenome</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" [class.is-invalid]="errors?.lastName" placeholder="Sobrenome" [(ngModel)]="user.lastName" name="lastName">
+                                <div class="invalid-feedback" *ngFor="let error of errors?.lastName">
+                                    {{ error }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="text-input">email</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" [class.is-invalid]="errors?.email" placeholder="email" [(ngModel)]="user.email" name="email">
+                                <div class="invalid-feedback" *ngFor="let error of errors?.email">
+                                    {{ error }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="text-input">Data de Nascimento</label>
+                            <div class="col-md-10">
+                                <input type="date" class="form-control" [class.is-invalid]="errors['$.birthday']" [ngModel] ="user.birthday | date:'yyyy-MM-dd'" (ngModelChange)="user.birthday = $event" name="birthday" placeholder="Data de Nascimento">
+                                <div class="invalid-feedback" *ngFor="let error of errors['$.birthday']">
+                                    {{ error }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="text-input">Escolaridade</label>
+                            <div class="col-md-10">
+                                <div class="btn-group" dropdown>
+                                    <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic" title="Escolaridade">
+                                        {{ user.educationalLevel }} <span class="caret"></span>
+                                    </button>
+                                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                                        <li role="menuitem">
+                                            <a class="dropdown-item" (click)="this.user.educationalLevel = 'Infantil'">Infantil</a>
+                                            <a class="dropdown-item" (click)="this.user.educationalLevel = 'Fundamental'">Fundamental</a>
+                                            <a class="dropdown-item" (click)="this.user.educationalLevel = 'Medio'">Medio</a>
+                                            <a class="dropdown-item" (click)="this.user.educationalLevel = 'Superior'">Superior</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <button type="button" class="btn btn-success" (click)="save()">
+                        <i class="fa fa-check mr-1"></i>Salvar
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="cancel()">
+                        <i class="fa fa-ban mr-1"></i>Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.row-->
+</div>
