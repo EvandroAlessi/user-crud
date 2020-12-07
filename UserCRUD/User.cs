@@ -10,6 +10,6 @@ namespace API
         public string LastName { get; set; }
         public string Email { get; set; }
         public DateTime Birthday { get; set; }
-        public int EducationalLevel { get; set; }
+        public EducationalLevel EducationalLevel { get; set; }
     }
 }

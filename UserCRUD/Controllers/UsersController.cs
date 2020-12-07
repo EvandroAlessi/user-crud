@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API;
+using System.Text.RegularExpressions;
 
 namespace API.Controllers
 {
@@ -14,6 +15,8 @@ namespace API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly Context _context;
+        private readonly Regex _regex = new Regex(@"^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$");
+
 
         public UsersController(Context context)
         {
@@ -49,7 +52,13 @@ namespace API.Controllers
         {
             if (id != user.Id)
             {
-                return BadRequest();
+                return BadRequest("The indicated Id is different from the route one.");
+            } else if (user.Birthday > DateTime.Now)
+            {
+                return BadRequest("Invalid birthday.");
+            } else if (!_regex.IsMatch(user.Email))
+            {
+                return BadRequest("invalid email.");
             }
 
             _context.Entry(user).State = EntityState.Modified;
@@ -79,6 +88,15 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            if (user.Birthday > DateTime.Now)
+            {
+                return BadRequest("Invalid birthday.");
+            }
+            else if (!_regex.IsMatch(user.Email))
+            {
+                return BadRequest("invalid email.");
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
